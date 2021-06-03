@@ -1,0 +1,23 @@
+{
+  "name": "blockchain-in-js",
+  "version": "1.0.0",
+  "description": "Repository containing example code on how a blockchain works inspired by and based on the video series \"Creating a blockchain with Javascript\" by SimplyExplained on Youtube",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KoehlerAlexander/Blockchain-in-JS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KoehlerAlexander/Blockchain-in-JS/issues"
+  },
+  "homepage": "https://github.com/KoehlerAlexander/Blockchain-in-JS#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
