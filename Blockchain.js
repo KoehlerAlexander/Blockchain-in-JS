@@ -3,6 +3,7 @@ import Block from "./Block.js";
 class Blockchain {
   constructor() {
     this.chain = [this.generateGenessisBlock()]
+    this.difficulty = 3
   }
 
   generateGenessisBlock() {
@@ -18,7 +19,7 @@ class Blockchain {
 
   addNewBlock(newBlock) {
     newBlock.previousBlock = this.getLatestBlock().hash
-    newBlock.hash = newBlock.calculateHash()
+    newBlock.mineBlock(this.difficulty)
     this.chain.push(newBlock)
   }
 

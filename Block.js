@@ -7,10 +7,18 @@ class Block {
     this.data = data
     this.previousBlock = previousBlock
     this.hash = this.calculateHash()
+    this.nonce = 0
   }
 
   calculateHash() {
-    return sha256(sha256(this.index + this.timestamp + this.previousBlock + JSON.stringify(this.data)).toString()).toString()
+    return sha256(sha256(this.index + this.timestamp + this.previousBlock + this.nonce + JSON.stringify(this.data)).toString()).toString()
+  }
+
+  mineBlock(difficulty) {
+    while (this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")) {
+      this.nonce++
+      this.hash = this.calculateHash()
+    }
   }
 }
 
