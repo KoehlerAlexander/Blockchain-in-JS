@@ -20,12 +20,6 @@ class Blockchain {
     }
   }
 
-  // addNewBlock(newBlock) {
-  //   newBlock.previousBlock = this.getLatestBlock().hash
-  //   newBlock.mineBlock(this.difficulty)
-  //   this.chain.push(newBlock)
-  // }
-
   minePendingTransactions(rewardAddress) {
     let block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash)
     block.mineBlock(this.difficulty)
@@ -52,6 +46,14 @@ class Blockchain {
   }
 
   addTransaction(transaction) {
+    if (!transaction.fromAddress || !transaction.toAddress) {
+      throw new Error("Transaction must include from and toAddress")
+    }
+
+    if (!transaction.isValid()) {
+      throw new Error("Transaction is invalid")
+    }
+
     this.pendingTransactions.push(transaction)
   }
 
@@ -59,6 +61,10 @@ class Blockchain {
     for (let i = 1; i < this.chain.length; i++) {
       const currentBlock = this.chain[i]
       const previousBlock = this.chain[i - 1]
+
+      if (!currentBlock.hasValidTransactions()) {
+        return false
+      }
 
       if (currentBlock.hash !== currentBlock.calculateHash()) {
         return false
