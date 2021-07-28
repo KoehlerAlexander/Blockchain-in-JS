@@ -1,11 +1,13 @@
-import Block from "./Block.js"
 import Blockchain from "./Blockchain.js"
+import Transaction from "./Transaction.js"
 
 const myBlockchain = new Blockchain()
-const block1 = new Block(1, Date.now(), { amount: 10 })
-const block2 = new Block(2, Date.now(), { amount: 15 })
-console.log("Mining Block 1 ...")
-myBlockchain.addNewBlock(block1)
-console.log("Mining Block 2 ...")
-myBlockchain.addNewBlock(block2)
-console.dir(myBlockchain, { depth: null })
+myBlockchain.addTransaction(new Transaction("robert", "alex", 50))
+myBlockchain.addTransaction(new Transaction("alex", "nina", 50))
+
+console.log("Starting Mining")
+myBlockchain.minePendingTransactions("robert")
+console.log("Kontostand von Robert ist: ", myBlockchain.getBallanceForAddress("robert"))
+console.log("Kontostand von Alex ist: ", myBlockchain.getBallanceForAddress("alex"))
+console.log("Kontostand von Nina ist: ", myBlockchain.getBallanceForAddress("nina"))
+console.log(myBlockchain.isChainValid())

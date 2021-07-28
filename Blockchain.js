@@ -1,13 +1,16 @@
-import Block from "./Block.js";
+import Block from "./Block.js"
+import Transaction from "./Transaction.js"
 
 class Blockchain {
   constructor() {
     this.chain = [this.generateGenessisBlock()]
     this.difficulty = 3
+    this.pendingTransactions = []
+    this.miningReward = 100
   }
 
   generateGenessisBlock() {
-    const block = new Block(0, Date.now(), "Genessis Block", "000")
+    const block = new Block(Date.now(), [], "000")
     return block
   }
 
@@ -17,10 +20,39 @@ class Blockchain {
     }
   }
 
-  addNewBlock(newBlock) {
-    newBlock.previousBlock = this.getLatestBlock().hash
-    newBlock.mineBlock(this.difficulty)
-    this.chain.push(newBlock)
+  // addNewBlock(newBlock) {
+  //   newBlock.previousBlock = this.getLatestBlock().hash
+  //   newBlock.mineBlock(this.difficulty)
+  //   this.chain.push(newBlock)
+  // }
+
+  minePendingTransactions(rewardAddress) {
+    let block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash)
+    block.mineBlock(this.difficulty)
+
+    console.log("Block sucessfully mined")
+    this.chain.push(block)
+    this.pendingTransactions = [new Transaction(null, rewardAddress, this.miningReward)]
+  }
+
+  getBallanceForAddress(address) {
+    let balance = 0
+
+    for (const block of this.chain) {
+      for (const transaction of block.transactions) {
+        if (transaction.fromAddress === address) {
+          balance -= transaction.amount
+        }
+        if (transaction.toAddress === address) {
+          balance += transaction.amount
+        }
+      }
+    }
+    return balance
+  }
+
+  addTransaction(transaction) {
+    this.pendingTransactions.push(transaction)
   }
 
   isChainValid() {
