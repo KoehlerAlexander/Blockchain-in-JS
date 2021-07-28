@@ -20,12 +20,6 @@ class Blockchain {
     }
   }
 
-  // addNewBlock(newBlock) {
-  //   newBlock.previousBlock = this.getLatestBlock().hash
-  //   newBlock.mineBlock(this.difficulty)
-  //   this.chain.push(newBlock)
-  // }
-
   minePendingTransactions(rewardAddress) {
     let block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash)
     block.mineBlock(this.difficulty)
