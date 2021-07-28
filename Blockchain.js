@@ -31,8 +31,6 @@ class Blockchain {
       if (currentBlock.hash !== currentBlock.calculateHash()) {
         return false
       }
-
-      console.log(currentBlock, previousBlock)
       if (currentBlock.previousBlock !== previousBlock.hash) {
         return false
       }
